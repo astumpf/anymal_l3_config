@@ -85,6 +85,8 @@ robot_model:
       name: anymal_kinematics
       params:
         robot_description: "/anymal_description"
+        root_link: "base"
+        leveled_base: False
         foot_type: "ball_foot"
         center_to_root: {x: 0.00, y: 0.0, z: 0.47, roll: 0.0, pitch: 0.0, yaw: 0.0}
         ignore_foot_orientation: True
