@@ -1,0 +1,109 @@
+robot_model:
+  description:
+    ### upper body settings ########################################################
+    base:
+    - idx: 0
+        name: "PELVIS"
+        shape: "CUBOID" # CUBOID, SPHERICAL
+        size: {x: 0.7, y: 1.1, z: 1.95} # [m]
+        link: "base"
+        link_to_center_offset: {x: 0.00, y: 0.00, z: 0.00, roll:  0.00, pitch:  0.00, yaw:  0.00} # 3x[m] 3x[rad], transformation from body center to tf frame
+    
+    ### foot settings ##############################################################
+    base_foot: &base_foot
+      - shape: "CUBOID" # CUBOID, SPHERICAL
+        size: {x: 0.103, y: 0.060, z: 0.023} # [m]
+        # position (offset) of planner foot frame (center of sole) given in robot's "foot" link frame
+        link_to_sole_offset: {x:  0.00, y:  0.00, z: -0.028, roll:  0.00, pitch:  0.00, yaw:  0.00} # 3x[m] 3x[rad]
+
+    feet:
+      - <<: *base_foot
+        idx: 0
+        name: "LF_LEG"
+        link: "LF_FLATFOOT"
+        # the neutral stance describes the pose of each foot (center of sole) relative to the (implicitly defined) robot center
+        neutral_stance: {x:  0.365, y:  0.205, z:  0.00, roll:  0.00, pitch:  0.00, yaw:  0.00}
+        vis:
+          color: {r: 0.0, g: 1.0, b: 0.0, a: 1.0}
+          #mesh_resource: "package://anymal_flat_foot_description/urdf/subsystems/sole/flat_sole.stl"
+          mesh_offset: {x:  0.00, y:  0.00, z:  0.028, roll:  0.00, pitch:  0.00, yaw:  0.00}
+          mesh_scale: [0.001, 0.001, 0.001]
+
+      - <<: *base_foot
+        idx: 1
+        name: "RF_LEG"
+        link: "RF_FLATFOOT"
+        # the neutral stance describes the pose of each foot (center of sole) relative to the (implicitly defined) robot center
+        neutral_stance: {x:  0.365, y: -0.205, z:  0.00, roll:  0.00, pitch:  0.00, yaw:  0.00}
+        vis:
+          color: {r: 1.0, g: 0.0, b: 0.0, a: 1.0}
+          #mesh_resource: "package://anymal_flat_foot_description/urdf/subsystems/sole/flat_sole.stl"
+          mesh_offset: {x:  0.00, y:  0.00, z:  0.028, roll:  0.00, pitch:  0.00, yaw:  0.00}
+          mesh_scale: [0.001, 0.001, 0.001]
+
+      - <<: *base_foot
+        idx: 2
+        name: "LH_LEG"
+        link: "LH_FLATFOOT"
+        # the neutral stance describes the pose of each foot (center of sole) relative to the (implicitly defined) robot center
+        neutral_stance: {x: -0.365, y:  0.205, z:  0.00, roll:  0.00, pitch:  0.00, yaw:  0.00}
+        vis:
+          color: {r: 0.0, g: 0.6, b: 0.0, a: 1.0}
+          #mesh_resource: "package://anymal_flat_foot_description/urdf/subsystems/sole/flat_sole.stl"
+          mesh_offset: {x:  0.00, y:  0.00, z:  0.028, roll:  0.00, pitch:  0.00, yaw:  0.00}
+          mesh_scale: [0.001, 0.001, 0.001]
+
+      - <<: *base_foot
+        idx: 3
+        name: "RH_LEG"
+        link: "RH_FLATFOOT"
+        # the neutral stance describes the pose of each foot (center of sole) relative to the (implicitly defined) robot center
+        neutral_stance: {x: -0.365, y: -0.205, z:  0.00, roll:  0.00, pitch:  0.00, yaw:  0.00}
+        vis:
+          color: {r: 0.6, g: 0.0, b: 0.0, a: 1.0}
+          #mesh_resource: "package://anymal_flat_foot_description/urdf/subsystems/sole/flat_sole.stl"
+          mesh_offset: {x:  0.00, y:  0.00, z:  0.028, roll:  0.00, pitch:  0.00, yaw:  0.00}
+          mesh_scale: [0.001, 0.001, 0.001]
+
+    ### leg settings ###############################################################
+    legs:
+      - idx: 0
+        name: "LF_LEG"
+        root_link: "base"
+        tip_link: "LF_FLATFOOT"
+        joints: ["LF_HAA", "LF_HFE", "LF_KFE", "LF_ADAPTER_TO_FTSENSOR", "LF_ADAPTER_TO_ANKLE", "LF_ANKLE_TO_FLATFOOT"]
+
+      - idx: 1
+        name: "RF_LEG"
+        root_link: "base"
+        tip_link: "RF_FLATFOOT"
+        joints: ["RF_HAA", "RF_HFE", "RF_KFE", "RF_ADAPTER_TO_FTSENSOR", "RF_ADAPTER_TO_ANKLE", "RF_ANKLE_TO_FLATFOOT"]
+
+      - idx: 2
+        name: "LH_LEG"
+        root_link: "base"
+        tip_link: "LH_FLATFOOT"
+        joints: ["LH_HAA", "LH_HFE", "LH_KFE", "LH_ADAPTER_TO_FTSENSOR", "LH_ADAPTER_TO_ANKLE", "LH_ANKLE_TO_FLATFOOT"]
+
+      - idx: 3
+        name: "RH_LEG"
+        root_link: "base"
+        tip_link: "RH_FLATFOOT"
+        joints: ["RH_HAA", "RH_HFE", "RH_KFE", "RH_ADAPTER_TO_FTSENSOR", "RH_ADAPTER_TO_ANKLE", "RH_ANKLE_TO_FLATFOOT"]
+
+    ### plugins ####################################################################
+  plugins:
+    kinematics:
+      name: anymal_kinematics
+      params:
+        robot_description: "/anymal_description"
+        foot_type: "flat_foot"
+        center_to_root: {x: 0.00, y: 0.0, z: 0.47, roll: 0.0, pitch: 0.0, yaw: 0.0}
+    gait_generator:
+      name: cyclic_gait_generator
+      params:
+        cycle: [0, 3, 1, 2]
+        start: [0, 1, 2, 3]
+        #cycle: [[0, 3], [1, 2]]
+        #start: [[0, 3]]
+
