@@ -2,12 +2,12 @@ robot_model:
   description:
     ### upper body settings ########################################################
     base:
-    - idx: 0
+      - idx: 0
         name: "PELVIS"
         shape: "CUBOID" # CUBOID, SPHERICAL
-        size: {x: 0.7, y: 1.1, z: 1.95} # [m]
+        size: {x: 1.0, y: 0.6, z: 0.6} # [m]
         link: "base"
-        link_to_center_offset: {x: 0.00, y: 0.00, z: 0.00, roll:  0.00, pitch:  0.00, yaw:  0.00} # 3x[m] 3x[rad], transformation from body center to tf frame
+        link_to_feet_center_offset: {x: 0.00, y: 0.00, z: 0.00, roll:  0.00, pitch:  0.00, yaw:  0.00} # 3x[m] 3x[rad], transformation from body center to tf frame
     
     ### foot settings ##############################################################
     base_foot: &base_foot
