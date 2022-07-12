@@ -5,5 +5,5 @@
 
   <!-- start robot model server -->
   <node name="robot_model_server" pkg="l3_plugins" type="robot_model_server" respawn="true" output="screen" />
-  <rosparam file="$(find anymal_l3_config)/config/anymal_c_$(arg foot_type).yaml" command="load" />
+  <rosparam file="$(dirname)/../config/anymal_c_$(arg foot_type).yaml" command="load" />
 </launch>
