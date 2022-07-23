@@ -7,7 +7,7 @@ robot_model:
         shape: "CUBOID" # CUBOID, SPHERICAL
         size: {x: 1.0, y: 0.6, z: 0.6} # [m]
         link: "base"
-        link_to_feet_center_offset: {x: 0.00, y: 0.00, z: 0.00, roll:  0.00, pitch:  0.00, yaw:  0.00} # 3x[m] 3x[rad], transformation from body center to tf frame
+        link_to_feet_center_offset: {x: 0.00, y: 0.00, z: -0.47, roll:  0.00, pitch:  0.00, yaw:  0.00} # 3x[m] 3x[rad], transformation from geometric feet center to tf frame
     
     ### foot settings ##############################################################
     base_foot: &base_foot
@@ -21,7 +21,7 @@ robot_model:
         idx: 0
         name: "LF_LEG"
         link: "LF_FLATFOOT"
-        # the neutral stance describes the pose of each foot (center of sole) relative to the (implicitly defined) robot center
+        # the neutral stance describes the pose of each foot (center of sole) relative to the geometric feet center
         neutral_stance: {x:  0.365, y:  0.205, z:  0.00, roll:  0.00, pitch:  0.00, yaw:  0.00}
         vis:
           color: {r: 0.0, g: 1.0, b: 0.0, a: 1.0}
@@ -33,7 +33,6 @@ robot_model:
         idx: 1
         name: "RF_LEG"
         link: "RF_FLATFOOT"
-        # the neutral stance describes the pose of each foot (center of sole) relative to the (implicitly defined) robot center
         neutral_stance: {x:  0.365, y: -0.205, z:  0.00, roll:  0.00, pitch:  0.00, yaw:  0.00}
         vis:
           color: {r: 1.0, g: 0.0, b: 0.0, a: 1.0}
@@ -45,7 +44,6 @@ robot_model:
         idx: 2
         name: "LH_LEG"
         link: "LH_FLATFOOT"
-        # the neutral stance describes the pose of each foot (center of sole) relative to the (implicitly defined) robot center
         neutral_stance: {x: -0.365, y:  0.205, z:  0.00, roll:  0.00, pitch:  0.00, yaw:  0.00}
         vis:
           color: {r: 0.0, g: 0.6, b: 0.0, a: 1.0}
@@ -57,7 +55,6 @@ robot_model:
         idx: 3
         name: "RH_LEG"
         link: "RH_FLATFOOT"
-        # the neutral stance describes the pose of each foot (center of sole) relative to the (implicitly defined) robot center
         neutral_stance: {x: -0.365, y: -0.205, z:  0.00, roll:  0.00, pitch:  0.00, yaw:  0.00}
         vis:
           color: {r: 0.6, g: 0.0, b: 0.0, a: 1.0}
@@ -100,7 +97,6 @@ robot_model:
         root_link: "base"
         leveled_base: False
         foot_type: "flat_foot"
-        center_to_root: {x: 0.00, y: 0.0, z: 0.47, roll: 0.0, pitch: 0.0, yaw: 0.0}
     gait_generator:
       name: cyclic_gait_generator
       params:
