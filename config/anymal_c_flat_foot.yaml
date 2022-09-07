@@ -1,5 +1,7 @@
 robot_model:
   description:
+    robot_description: "/anymal_description"
+
     ### upper body settings ########################################################
     base:
       - idx: 0
@@ -93,7 +95,6 @@ robot_model:
     kinematics:
       name: anymal_kinematics
       params:
-        robot_description: "/anymal_description"
         root_link: "base"
         leveled_base: False
         foot_type: "flat_foot"
